@@ -5,8 +5,8 @@ const PORT = 3000
 
 const server = http.createServer((req, res) => {
   if (req.method === 'GET') {
-    res.writeHead(200, { 'Content-Type': 'text/html', charset: 'utf-8' })
     if (req.url === '/') {
+      res.writeHead(200, { 'Content-Type': 'text/html', charset: 'utf-8' })
       fs.readFile(
         path.join(__dirname, 'views', 'index.html'),
         'utf-8',
@@ -17,6 +17,7 @@ const server = http.createServer((req, res) => {
         }
       )
     } else if (req.url === '/about') {
+      res.writeHead(200, { 'Content-Type': 'text/html', charset: 'utf-8' })
       fs.readFile(
         path.join(__dirname, 'views', 'about.html'),
         'utf-8',
@@ -26,6 +27,20 @@ const server = http.createServer((req, res) => {
           res.end()
         }
       )
+    } else if (req.url === '/api/users') {
+      res.writeHead(200, { 'Content-Type': 'text/json', charset: 'utf-8' })
+      const users = [
+        {
+          name: 'Vaska',
+          age: 25,
+        },
+        {
+          name: 'Valisiy',
+          age: 21,
+        },
+      ]
+      res.write(JSON.stringify(users))
+      res.end()
     }
   } else if (req.method === 'POST') {
     const body = []
