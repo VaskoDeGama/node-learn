@@ -8,7 +8,7 @@ const server = http.createServer((req, res) => {
     if (req.url === '/') {
       res.writeHead(200, { 'Content-Type': 'text/html', charset: 'utf-8' })
       fs.readFile(
-        path.join(__dirname, 'views', 'index.html'),
+        path.join(__dirname, 'views', 'index.hbs'),
         'utf-8',
         (err, data) => {
           if (err) throw err
@@ -19,7 +19,7 @@ const server = http.createServer((req, res) => {
     } else if (req.url === '/about') {
       res.writeHead(200, { 'Content-Type': 'text/html', charset: 'utf-8' })
       fs.readFile(
-        path.join(__dirname, 'views', 'about.html'),
+        path.join(__dirname, 'views', 'about.hbs'),
         'utf-8',
         (err, data) => {
           if (err) throw err
