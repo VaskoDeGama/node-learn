@@ -1,6 +1,6 @@
 const { Router } = require('express')
-const Course = require('../models/Course')
-const Card = require('../models/Card')
+const Course = require('../models/Course_fs')
+const Card = require('../models/Card_fs')
 
 const router = Router()
 

@@ -1,5 +1,6 @@
 const { Router } = require('express')
-const Course = require('../models/Course')
+//const Course = require('../models/Course_fs')
+const Course = require('../models/Course_mongo')
 
 const router = Router()
 
@@ -11,9 +12,18 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-  const course = new Course(req.body.title, req.body.price, req.body.url)
-  await course.save()
-  res.redirect('/courses')
+  //const course = new Course(req.body.title, req.body.price, req.body.url)
+  const course = new Course({
+    title: req.body.title,
+    price: req.body.price,
+    url: req.body.url,
+  })
+  try {
+    await course.save()
+    res.redirect('/courses')
+  } catch (e) {
+    console.log(e)
+  }
 })
 
 module.exports = router

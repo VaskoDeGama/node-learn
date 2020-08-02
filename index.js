@@ -34,7 +34,9 @@ async function start() {
   try {
     const password = 'UueHRu99vwLvsm2N'
     const db = 'node-learn'
-    const url = `mongodb+srv://vaskadagama:${password}@nodelearn.yfj6z.mongodb.net/${db}?retryWrites=true&w=majority`
+    const url = `mongodb+srv://vaskadagama:${password}@nodelearn.yfj6z.mongodb.net/${db}`
+    mongoose.set('useFindAndModify', false)
+
     await mongoose.connect(url, {
       useNewUrlParser: true,
       useUnifiedTopology: true,

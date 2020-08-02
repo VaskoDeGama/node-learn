@@ -7,9 +7,9 @@ const p = path.join(
   'card.json'
 )
 
-class Card {
+class Card_fs {
   static async add(course) {
-    const card = await Card.fetch()
+    const card = await Card_fs.fetch()
     const idx = card.courses.findIndex((c) => c.id === course.id)
     const candidate = card.courses[idx]
     const totalPrice = +card.price
@@ -47,7 +47,7 @@ class Card {
   }
 
   static async remove(id) {
-    const card = await Card.fetch()
+    const card = await Card_fs.fetch()
     const idx = card.courses.findIndex((c) => c.id === id)
     const course = card.courses[idx]
     const totalPrice = card.price
@@ -71,4 +71,4 @@ class Card {
   }
 }
 
-module.exports = Card
+module.exports = Card_fs

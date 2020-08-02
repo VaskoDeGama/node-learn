@@ -2,7 +2,7 @@ const { v4: uuid } = require('uuid')
 const path = require('path')
 const fs = require('fs')
 
-class Course {
+class Course_fs {
   constructor(title, price, url) {
     this.title = title
     this.price = price
@@ -20,7 +20,7 @@ class Course {
   }
 
   async save() {
-    const courses = await Course.getAll()
+    const courses = await Course_fs.getAll()
     courses.push(this.toJSON())
     return new Promise((resolve, reject) => {
       fs.writeFile(
@@ -54,7 +54,7 @@ class Course {
   }
 
   static async update(course) {
-    const courses = await Course.getAll()
+    const courses = await Course_fs.getAll()
     const idx = courses.findIndex((c) => c.id === course.id)
     courses[idx] = {
       ...course,
@@ -76,9 +76,9 @@ class Course {
   }
 
   static async getById(id) {
-    const courses = await Course.getAll()
+    const courses = await Course_fs.getAll()
     return courses.find((c) => c.id === id)
   }
 }
 
-module.exports = Course
+module.exports = Course_fs
