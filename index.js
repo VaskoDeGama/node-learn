@@ -1,5 +1,6 @@
 const express = require('express')
 const path = require('path')
+const mongoose = require('mongoose')
 const handlebars = require('express-handlebars')
 const homeRoute = require('./routes/home')
 const coursesRoute = require('./routes/courses')
@@ -29,6 +30,21 @@ app.use('/card', cardRoute)
 
 const PORT = process.env.PORT || 3000
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
-})
+async function start() {
+  try {
+    const password = 'UueHRu99vwLvsm2N'
+    const db = 'node-learn'
+    const url = `mongodb+srv://vaskadagama:${password}@nodelearn.yfj6z.mongodb.net/${db}?retryWrites=true&w=majority`
+    await mongoose.connect(url, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`)
+    })
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+start()
