@@ -3,7 +3,7 @@
 {{#if courses}}
   {{#each courses}}
     <div class="row">
-      <div class="col s6 offset-s3">
+      <div class="col s8 offset-s2">
         <div class="card">
           <div class="card-image">
             <img src="{{url}}" alt="{{title}}">
@@ -12,9 +12,13 @@
             <span class="card-title">{{title}}</span>
             <p class="price">{{price}}</p>
           </div>
-          <div class="card-action">
+          <div class="card-action actions">
             <a href="/courses/{{id}}" target="_blank">Open course</a>
             <a href="/courses/{{id}}/edit?allow=true" target="_blank">Edit course</a>
+            <form action="/card/add" method="post">
+              <input type="hidden" name="id" value="{{id}}">
+              <button class="btn btn-primary">Add to card</button>
+            </form>
           </div>
         </div>
       </div>

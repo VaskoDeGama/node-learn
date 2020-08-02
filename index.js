@@ -3,6 +3,7 @@ const handlebars = require('express-handlebars')
 const homeRoute = require('./routes/home')
 const coursesRoute = require('./routes/courses')
 const addRoute = require('./routes/add')
+const cardRoute = require('./routes/card')
 const app = express()
 
 const hbs = handlebars.create({
@@ -23,6 +24,7 @@ app.use(
 app.use('/', homeRoute)
 app.use('/courses', coursesRoute)
 app.use('/add', addRoute)
+app.use('/card', cardRoute)
 
 const PORT = process.env.PORT || 3000
 
