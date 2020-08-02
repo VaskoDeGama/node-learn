@@ -3,10 +3,10 @@ const path = require('path')
 const fs = require('fs')
 
 class Course {
-  constructor(title, price, img) {
+  constructor(title, price, url) {
     this.title = title
     this.price = price
-    this.img = img
+    this.url = url
     this.id = uuid()
   }
 
@@ -14,7 +14,7 @@ class Course {
     return {
       title: this.title,
       price: this.price,
-      img: this.img,
+      url: this.url,
       id: this.id,
     }
   }
@@ -47,6 +47,28 @@ class Course {
             reject(err)
           } else {
             resolve(JSON.parse(content))
+          }
+        }
+      )
+    })
+  }
+
+  static async update(course) {
+    const courses = await Course.getAll()
+    const idx = courses.findIndex((c) => c.id === course.id)
+    courses[idx] = {
+      ...course,
+    }
+
+    return new Promise((resolve, reject) => {
+      fs.writeFile(
+        path.join(__dirname, '..', 'data', 'courses.json'),
+        JSON.stringify(courses),
+        (err) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve()
           }
         }
       )
