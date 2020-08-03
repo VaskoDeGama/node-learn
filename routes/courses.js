@@ -5,7 +5,10 @@ const Course = require('../models/Course_mongo')
 const router = Router()
 
 router.get('/', async (req, res) => {
-  const courses = await Course.find().lean()
+  const courses = await Course.find()
+    .populate('userId', 'email name')
+    .select('price title url')
+    .lean()
   res.render('courses', {
     title: 'Courses',
     isCourses: true,
