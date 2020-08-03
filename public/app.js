@@ -9,18 +9,18 @@ document.querySelectorAll('.price').forEach((node) => {
   node.textContent = toFormat(node.textContent)
 })
 
-const $card = document.querySelector('#card')
-if ($card) {
-  $card.addEventListener('click', (event) => {
+const $cart = document.querySelector('#cart')
+if ($cart) {
+  $cart.addEventListener('click', (event) => {
     if (event.target.classList.contains('js-remove')) {
       const id = event.target.dataset.id
-      fetch(`/card/remove/${id}`, {
+      fetch(`/cart/remove/${id}`, {
         method: 'delete',
       })
         .then((res) => res.json())
-        .then((card) => {
-          if (card.courses.length) {
-            $card.querySelector('tbody').innerHTML = card.courses
+        .then((cart) => {
+          if (cart.courses.length) {
+            $cart.querySelector('tbody').innerHTML = cart.courses
               .map((c) => {
                 return `
                           <tr>
@@ -32,9 +32,9 @@ if ($card) {
                   </tr>`
               })
               .join('')
-            $card.querySelector('.price').textContent = toFormat(card.price)
+            $cart.querySelector('.price').textContent = toFormat(cart.price)
           } else {
-            $card.innerHTML = '<p>Card is empty</p>'
+            $cart.innerHTML = '<p>cart is empty</p>'
           }
         })
     }

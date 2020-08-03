@@ -4,27 +4,27 @@ const fs = require('fs')
 const p = path.join(
   path.dirname(process.mainModule.filename),
   'data',
-  'card.json'
+  'cart.json'
 )
 
-class Card_fs {
+class Cart_fs {
   static async add(course) {
-    const card = await Card_fs.fetch()
-    const idx = card.courses.findIndex((c) => c.id === course.id)
-    const candidate = card.courses[idx]
-    const totalPrice = +card.price
+    const cart = await Cart_fs.fetch()
+    const idx = cart.courses.findIndex((c) => c.id === course.id)
+    const candidate = cart.courses[idx]
+    const totalPrice = +cart.price
     if (candidate) {
       candidate.count++
-      card.courses[idx] = candidate
+      cart.courses[idx] = candidate
     } else {
       course.count = 1
-      card.courses.push(course)
+      cart.courses.push(course)
     }
 
-    card.price = totalPrice + +course.price
+    cart.price = totalPrice + +course.price
 
     return new Promise((resolve, reject) => {
-      fs.writeFile(p, JSON.stringify(card), (err) => {
+      fs.writeFile(p, JSON.stringify(cart), (err) => {
         if (err) {
           reject(err)
         } else {
@@ -47,28 +47,28 @@ class Card_fs {
   }
 
   static async remove(id) {
-    const card = await Card_fs.fetch()
-    const idx = card.courses.findIndex((c) => c.id === id)
-    const course = card.courses[idx]
-    const totalPrice = card.price
+    const cart = await Cart_fs.fetch()
+    const idx = cart.courses.findIndex((c) => c.id === id)
+    const course = cart.courses[idx]
+    const totalPrice = cart.price
 
     if (course.count === 1) {
-      card.courses = card.courses.filter((c) => c.id !== id)
+      cart.courses = cart.courses.filter((c) => c.id !== id)
     } else {
-      card.courses[idx].count--
+      cart.courses[idx].count--
     }
-    card.price = totalPrice - +course.price
+    cart.price = totalPrice - +course.price
 
     return new Promise((resolve, reject) => {
-      fs.writeFile(p, JSON.stringify(card), (err) => {
+      fs.writeFile(p, JSON.stringify(cart), (err) => {
         if (err) {
           reject(err)
         } else {
-          resolve(card)
+          resolve(cart)
         }
       })
     })
   }
 }
 
-module.exports = Card_fs
+module.exports = Cart_fs
