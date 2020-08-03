@@ -19,6 +19,7 @@ if ($cart) {
       })
         .then((res) => res.json())
         .then((cart) => {
+          console.log(cart)
           if (cart.courses.length) {
             $cart.querySelector('tbody').innerHTML = cart.courses
               .map((c) => {
