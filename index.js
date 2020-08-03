@@ -32,13 +32,11 @@ const PORT = process.env.PORT || 3000
 
 async function start() {
   try {
-    const password = 'UueHRu99vwLvsm2N'
-    const db = 'node-learn'
-    const url = `mongodb+srv://vaskadagama:${password}@nodelearn.yfj6z.mongodb.net/${db}`
-    mongoose.set('useFindAndModify', false)
+    const url = `mongodb+srv://vaskodegama:78562143@engcrm-rllxx.azure.mongodb.net/node-learn?retryWrites=true&w=majority`
 
     await mongoose.connect(url, {
       useNewUrlParser: true,
+      useFindAndModify: false,
       useUnifiedTopology: true,
     })
     app.listen(PORT, () => {
@@ -49,4 +47,4 @@ async function start() {
   }
 }
 
-start()
+start().then((r) => r)

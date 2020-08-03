@@ -13,6 +13,17 @@ router.get('/', async (req, res) => {
   })
 })
 
+router.post('/remove', async (req, res) => {
+  try {
+    await Course.deleteOne({
+      _id: req.body.id,
+    })
+    res.redirect('/courses')
+  } catch (e) {
+    console.log(e)
+  }
+})
+
 router.post('/edit', async (req, res) => {
   const { id } = req.body
   delete req.body.id
@@ -21,7 +32,8 @@ router.post('/edit', async (req, res) => {
 })
 
 router.get('/:id', async (req, res) => {
-  const course = await Course.findById(req.params.id).lean()
+  const id = req.params.id
+  const course = await Course.findById(id).lean()
   res.render('course', {
     layout: 'empty',
     title: `Course: ${course.title}`,
