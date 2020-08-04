@@ -16,10 +16,10 @@ const courseSchema = new Schema({
   },
 })
 
-courseSchema.method('toClient', function () {
+courseSchema.methods.toClient = function () {
   const course = this.toObject()
   course.id = course._id
   return course
-})
+}
 
 module.exports = model('Course', courseSchema)

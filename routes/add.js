@@ -1,6 +1,6 @@
 const { Router } = require('express')
 //const Course = require('../models/Course_fs')
-const Course = require('../models/Course_mongo')
+const Course = require('../models/Course')
 
 const router = Router()
 

@@ -25,6 +25,9 @@
   font-size: 2.5rem;
 }
 
+.price.small {
+  font-size: 1rem;
+}
 .card-action.actions {
   display: flex;
   align-items: center;

@@ -27,7 +27,7 @@ const userSchema = new Schema({
   },
 })
 
-userSchema.method('addToCart', function (course) {
+userSchema.methods.addToCart = function (course) {
   const items = [...this.cart.items]
   const idx = items.findIndex((c) => {
     return c.courseId.toString() === course._id.toString()
@@ -42,9 +42,9 @@ userSchema.method('addToCart', function (course) {
   }
   this.cart = { items }
   return this.save()
-})
+}
 
-userSchema.method('removeFromCart', function (id) {
+userSchema.methods.removeFromCart = function (id) {
   let items = [...this.cart.items]
   const idx = items.findIndex((c) => c.courseId.toString() === id.toString())
 
@@ -56,6 +56,11 @@ userSchema.method('removeFromCart', function (id) {
 
   this.cart = { items }
   return this.save()
-})
+}
+
+userSchema.methods.clearCart = function () {
+  this.cart = { items: [] }
+  return this.save()
+}
 
 module.exports = model('User', userSchema)
