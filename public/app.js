@@ -29,8 +29,12 @@ if ($cart) {
   $cart.addEventListener('click', (event) => {
     if (event.target.classList.contains('js-remove')) {
       const id = event.target.dataset.id
+      const csrf = event.target.dataset.csrf
       fetch(`/cart/remove/${id}`, {
         method: 'delete',
+        headers: {
+          'X-XSRF-TOKEN': csrf,
+        },
       })
         .then((res) => res.json())
         .then((cart) => {
@@ -48,7 +52,7 @@ if ($cart) {
                   </tr>`
               })
               .join('')
-            $cart.querySelector('.price').textContent = toFormat(cart.price)
+            $cart.querySelector('.price').textContent = toCurrency(cart.price)
           } else {
             $cart.innerHTML = '<p>cart is empty</p>'
           }
@@ -56,3 +60,5 @@ if ($cart) {
     }
   })
 }
+
+M.Tabs.init(document.querySelectorAll('.tabs'))
