@@ -1,4 +1,5 @@
 const express = require('express')
+const config = require('config')
 const path = require('path')
 const mongoose = require('mongoose')
 const handlebars = require('express-handlebars')
@@ -9,7 +10,8 @@ const cartRoute = require('./routes/cart')
 const ordersRoute = require('./routes/orders')
 const User = require('./models/User')
 const app = express()
-
+const PORT = config.get('port') || process.env.PORT || 3000
+const DB_URL = config.get('dbUrl')
 const hbs = handlebars.create({
   defaultLayout: 'main',
   extname: 'hbs',
@@ -40,13 +42,9 @@ app.use('/add', addRoute)
 app.use('/cart', cartRoute)
 app.use('/orders', ordersRoute)
 
-const PORT = process.env.PORT || 3000
-
 async function start() {
   try {
-    const url = `mongodb+srv://vaskodegama:78562143@engcrm-rllxx.azure.mongodb.net/node-learn?retryWrites=true&w=majority`
-
-    await mongoose.connect(url, {
+    await mongoose.connect(DB_URL, {
       useNewUrlParser: true,
       useFindAndModify: false,
       useUnifiedTopology: true,
