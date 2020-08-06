@@ -15,6 +15,7 @@ const ordersRoute = require('./routes/orders')
 const authRoute = require('./routes/auth')
 const varMiddleware = require('./middleware/variables')
 const userMiddleware = require('./middleware/user')
+const helpers = require('./utils/helperHbs')
 
 const app = express()
 
@@ -25,6 +26,7 @@ const SECRET = config.get('secret')
 const hbs = handlebars.create({
   defaultLayout: 'main',
   extname: 'hbs',
+  helpers,
 })
 
 const store = new MongoStore({
