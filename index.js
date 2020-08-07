@@ -13,9 +13,11 @@ const addRoute = require('./routes/add')
 const cartRoute = require('./routes/cart')
 const ordersRoute = require('./routes/orders')
 const authRoute = require('./routes/auth')
+const profileRoute = require('./routes/profile')
 const varMiddleware = require('./middleware/variables')
 const userMiddleware = require('./middleware/user')
 const errorMiddleware = require('./middleware/error')
+const fileMiddleware = require('./middleware/file')
 const helpers = require('./utils/helperHbs')
 
 const app = express()
@@ -39,16 +41,8 @@ app.engine('hbs', hbs.engine)
 app.set('view engine', 'hbs')
 app.set('views', 'views')
 
-// app.use(async (req, res, next) => {
-//   try {
-//     req.user = await User.findById('5f282009e4e23b5babd068b0')
-//     next()
-//   } catch (e) {
-//     console. log(e)
-//   }
-// })
-
 app.use(express.static(path.join(__dirname, 'public')))
+app.use('/images', express.static(path.join(__dirname, 'images')))
 app.use(
   express.urlencoded({
     extended: true,
@@ -63,7 +57,7 @@ app.use(
     store,
   })
 )
-
+app.use(fileMiddleware.single('avatar'))
 app.use(csrf())
 app.use(flash())
 app.use(varMiddleware)
@@ -75,6 +69,7 @@ app.use('/add', addRoute)
 app.use('/cart', cartRoute)
 app.use('/orders', ordersRoute)
 app.use('/auth', authRoute)
+app.use('/profile', profileRoute)
 app.use(errorMiddleware)
 
 async function start() {
@@ -84,16 +79,6 @@ async function start() {
       useFindAndModify: false,
       useUnifiedTopology: true,
     })
-
-    // const candidate = await User.findOne()
-    // if (!candidate) {
-    //   const user = new User({
-    //     email: 'test@mail.ru',
-    //     name: 'Vaska',
-    //     cart: { items: [] },
-    //   })
-    //   await user.save()
-    // }
 
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`)
