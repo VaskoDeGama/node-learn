@@ -15,6 +15,7 @@ const ordersRoute = require('./routes/orders')
 const authRoute = require('./routes/auth')
 const varMiddleware = require('./middleware/variables')
 const userMiddleware = require('./middleware/user')
+const errorMiddleware = require('./middleware/error')
 const helpers = require('./utils/helperHbs')
 
 const app = express()
@@ -74,6 +75,7 @@ app.use('/add', addRoute)
 app.use('/cart', cartRoute)
 app.use('/orders', ordersRoute)
 app.use('/auth', authRoute)
+app.use(errorMiddleware)
 
 async function start() {
   try {

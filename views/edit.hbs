@@ -1,6 +1,8 @@
 <h1>Edit course: {{course.title}}</h1>
-
-<form action="/courses/edit" method="post" class="course-edit">
+{{#if error}}
+  <p class="alert">{{error}}</p>
+{{/if}}
+<form action="/courses/edit" method="post" class="course-edit" novalidate>
   <div class="input-field">
     <input id="title" type="text" name="title" class="validate" required value="{{course.title}}">
     <label for="title">Course title</label>

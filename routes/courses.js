@@ -1,7 +1,9 @@
+const { validationResult } = require('express-validator')
 const { Router } = require('express')
 //const Course = require('../models/Course_fs')
 const isAuth = require('../middleware/auth')
 const Course = require('../models/Course')
+const { addCourseValidators } = require('../utils/validators')
 
 const router = Router()
 
@@ -38,10 +40,15 @@ router.post('/remove', isAuth, async (req, res) => {
   }
 })
 
-router.post('/edit', isAuth, async (req, res) => {
+router.post('/edit', isAuth, addCourseValidators, async (req, res) => {
   try {
+    const errors = validationResult(req)
     const { id } = req.body
     delete req.body.id
+    if (!errors.isEmpty()) {
+      req.flash('error', errors.array()[0].msg)
+      return res.status(422).redirect(`/courses/${id}/edit?allow=true`)
+    }
     const course = await Course.findOne({ _id: id })
     if (!isOwner(course, req)) {
       res.redirect('/courses')
@@ -79,6 +86,7 @@ router.get('/:id/edit', isAuth, async (req, res) => {
     }
     res.render('edit', {
       title: `Edit course: ${course.title}`,
+      error: req.flash('error'),
       course,
     })
   } catch (e) {
